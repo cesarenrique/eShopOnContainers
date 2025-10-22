@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Catalog.API.Data;
 using Catalog.API.Model;
+using Catalog.API.Data;
 
 namespace Catalog.API.Controllers
 {
