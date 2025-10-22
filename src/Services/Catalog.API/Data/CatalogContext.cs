@@ -1,11 +1,11 @@
-﻿using Catalog.API.Controllers.Model;
+﻿using Catalog.API.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Catalog.API.Controllers.Model
+namespace Catalog.API.Data
 {
     public class CatalogContext : DbContext // it must inherit from DbContext
     {

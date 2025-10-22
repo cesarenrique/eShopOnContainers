@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Catalog.API.Controllers.Model
+namespace Catalog.API.Model
 {
     public class CatalogType
     {

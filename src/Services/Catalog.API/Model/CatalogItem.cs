@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Catalog.API.Controllers.Model
+namespace Catalog.API.Model
 {
     public class CatalogItem
     {
