@@ -1,5 +1,6 @@
 using Catalog.API.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,8 +14,8 @@ builder.Services.AddSwaggerGen();
 
 
 
-var app = builder.Build();
 
+/*
 using (var scope = app.Services.CreateScope())
 {
     try
@@ -30,6 +31,35 @@ using (var scope = app.Services.CreateScope())
         logger.LogError(ex, "An error occurred seeding the DB.");
     }
 }
+*/
+// la conexión a la bd está definida en appsettings
+string? db2Use = Environment.GetEnvironmentVariable("DB2USE");
+// En caso de que el entorno de despliegue producción (Docker)
+if (db2Use == "DockerSQLServer")
+{
+    builder.Services.AddDbContext<CatalogContext>(options => {
+        options.UseSqlServer(builder.Configuration
+        .GetConnectionString("SQLServerDockerConnection"),
+        sqlServerOptionsAction: sqlOptions => {
+            //Recuperamos el nombre del Ensamblado donde está la migración
+            sqlOptions.MigrationsAssembly(
+    Assembly.GetExecutingAssembly().GetName().Name);
+            //Configuramos una conexión resiliente a la BD
+            sqlOptions.
+    EnableRetryOnFailure(maxRetryCount: 5,
+    maxRetryDelay: TimeSpan.FromSeconds(30),
+    errorNumbersToAdd: null);
+        });
+    });
+}
+else
+{
+    builder.Services.AddDbContext<CatalogContext>(options => options
+    .UseSqlServer(builder.Configuration
+    .GetConnectionString("DefaultConnection")));
+}
+
+var app = builder.Build();
 
 
 // Configure the HTTP request pipeline.
